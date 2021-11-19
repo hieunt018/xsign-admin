@@ -1,0 +1,11 @@
+.row {
+    margin-bottom: 1%;
+}
+
+.tableCss {
+    margin: 20px;
+}
+
+.tableCss thead tr th { 
+    font-weight: 800; 
+}
