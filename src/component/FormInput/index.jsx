@@ -9,105 +9,14 @@ import {
   getRouteInfo,
   getMainSign,
   getImageDisplay,
+  getAllUserAndRouteByAdmin
 } from "../../apis/api";
 import "../../App.css";
 import style from "./index.module.css";
 const { Option } = Select;
-const response = [
-  [
-      21.03035,
-      105.7817782
-  ],
-  [
-      21.03035,
-      105.7817782
-  ],
-  [
-      21.0303861,
-      105.7817956
-  ],
-  [
-      21.0303687,
-      105.7817803
-  ],
-  [
-      21.0303687,
-      105.7817803
-  ],
-  [
-      21.0303687,
-      105.7817803
-  ],
-  [
-      21.0303661,
-      105.7817421
-  ],
-  [
-      21.0303661,
-      105.7817421
-  ],
-  [
-      21.0303278,
-      105.7817638
-  ],
-  [
-      21.0303161,
-      105.7817572
-  ],
-  [
-      21.0303161,
-      105.7817572
-  ],
-  [
-      21.0303161,
-      105.7817572
-  ],
-  [
-      21.0302922,
-      105.7817436
-  ],
-  [
-      21.0303196,
-      105.7817976
-  ],
-  [
-      21.0303196,
-      105.7817976
-  ],
-  [
-      21.0303196,
-      105.7817976
-  ],
-  [
-      21.0305158,
-      105.7818162
-  ],
-  [
-      21.0305158,
-      105.7818162
-  ],
-  [
-      21.0305158,
-      105.7818162
-  ],
-  [
-      21.0303654,
-      105.7817745
-  ],
-  [
-      21.0303299,
-      105.7817571
-  ],
-  [
-      21.0303299,
-      105.7817571
-  ],
-  [
-      21.0302944,
-      105.781749
-  ]
-]
+
 export default function FormInput() {
+  const [allUseRoute, setAllUserRoute] = useState();
   const [allProvinces, setAllProvinces] = useState();
   const [provinceSelected, setProvinceSelected] = useState();
   const [user, setUser] = useState();
@@ -117,6 +26,42 @@ export default function FormInput() {
   const [allRoute, setAllRoute] = useState();
   const [image, setImage] = useState();
   const [latLngArr, setLatLngArr] = useState();
+  const [allLatLngArr, setAllLatLngArr] = useState();
+
+  const column = [
+    {
+      title: "Username",
+      key: "username",
+      dataIndex: "username",
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index === 0) {
+          obj.props.rowSpan = row.rowSpan;
+        } else {
+          obj.props.rowSpan = 0;
+        }
+        return obj;
+      },
+    },
+    {
+      title: "Route Id",
+      key: "routeId",
+      dataIndex: "routeId",
+    },
+    {
+      title: "Distance",
+      key: "distance",
+      dataIndex: "distance",
+    },
+    {
+      title: "Total sign",
+      key: "totalSign",
+      dataIndex: "totalSign",
+    }
+  ]
 
   const columns = [
     {
@@ -178,9 +123,9 @@ export default function FormInput() {
               <Image
                 style={{ width: "120px" }}
                 src={`data:image/jpeg;base64,${record.imageByte}`}
-                preview={{
-                  src: `data:image/jpeg;base64,${record.imageByte}`,
-                }}
+                // preview={{
+                //   src: `data:image/jpeg;base64,${record.imageByte}`,
+                // }}
               />
             )}
           </>
@@ -190,22 +135,73 @@ export default function FormInput() {
   ];
 
   useEffect(() => {
-    getListProvinces();
+    // getListProvinces();
+    getListUserAndRoute();
   }, []);
 
-  useEffect(() => {
-    getListUser();
-  }, [provinceSelected]);
+  // useEffect(() => {
+  //   getListUser();
+  // }, [provinceSelected]);
 
-  useEffect(() => {
-    getAllRouteByUser();
-  }, [userSelected]);
+  // useEffect(() => {
+  //   getAllRouteByUser();
+  // }, [userSelected]);
 
-  useEffect(() => {
-    getInfoOfRoute();
-    getSignInRoute();
-  }, [routeSelected]);
+  // useEffect(() => {
+  //   getInfoOfRoute();
+  //   getSignInRoute();
+  // }, [routeSelected]);
 
+  const getListUserAndRoute = () => {
+    let param = {
+      adminId: '2c1eeeb4-3c86-4e45-a438-ec4278df099c',
+    };
+    getAllUserAndRouteByAdmin(param)
+      .then((resp) => {
+        if (resp && resp.status === 200) {
+          let res = [];
+          for (let i = 0; i < resp.data.length; i++) {
+            let item = resp.data[i];
+            
+            for (let i = 0; i < item.routes.length; i++) {
+              let r = {
+                username: item.username,
+                rowSpan: item.routes.length,
+                routeId: item.routes[i].routeId,
+                distance: item.routes[i].distance,
+                totalSign: item.routes[i].totalSign,
+                geoPoints: item.routes[i].geoPoints,
+              }
+              res.push(r)
+            }
+          }
+          let listCoordinate = [];
+          let listRoute = res.map(route => {
+            console.log(route)
+            if (route.geoPoints) {
+              let latLngs = route.geoPoints.sort((a, b) => (a.time > b.time) ? 1 : -1);
+            console.log(latLngs)
+          let latLngArr = latLngs.map((item) => {
+              return [item.lat, item.lng];
+          });
+          listCoordinate.push(latLngArr)
+            }
+          })
+          // let latLngs = listRoute.sort((a, b) => (a.time > b.time) ? 1 : -1);
+          // let listPoint = latLngs.map((item) => {
+          //   return [item.lat, item.lng];
+          // });
+
+          console.log('listCoordinate', listCoordinate)
+          setAllLatLngArr(listCoordinate)
+          setAllUserRoute(res)
+        }
+      })
+      .catch(() => console.log("error", "Error"));
+  };
+
+  console.log(allUseRoute)
+  console.log(allLatLngArr)
   const getListProvinces = () => {
     getAllProvinces()
       .then((res) => {
@@ -236,7 +232,7 @@ export default function FormInput() {
     getRouteByUser(param)
       .then((res) => {
         if (res && res.status === 200) {
-          setAllRoute(res.data);
+          // setAllRoute(res.data);
         }
       })
       .catch(() => console.log("error", "Error"));
@@ -254,7 +250,6 @@ export default function FormInput() {
           let listPoint = data.map((item) => {
             return [item.lat, item.lng];
           });
-          console.log("list point", listPoint);
           setLatLngArr(listPoint);
         }
       })
@@ -375,13 +370,13 @@ export default function FormInput() {
           </Row>
           <Divider />
 
-          {allSign && (
+          {allUseRoute && (
             <Table
               style={{ width: "100%", overflowX: "scroll" }}
               className={style.tableCss}
               bordered={true}
-              columns={columns}
-              dataSource={allSign}
+              columns={column}
+              dataSource={allUseRoute}
             />
           )}
         </Col>
@@ -399,106 +394,19 @@ export default function FormInput() {
             />
             {/* <Marker position={[9.779349, 105.6189045]}>
             </Marker> */}
-            {latLngArr && latLngArr.length > 0 && (
+            {allLatLngArr && allLatLngArr.length > 0 && allLatLngArr.map(item =>
+            (
               <Polyline
-                positions={latLngArr}
+                positions={item}
                 weight={5}
                 color="red"
                 opacity={1}
                 fillColor="red"
               ></Polyline>
-            )}
+            ))}
           </Map>
         </Col>
       </Row>
-      {/* <Row>
-        <Col
-          className="gutter-row"
-          xs={{ span: 5 }}
-          md={{ span: 5 }}
-          offset={1}
-          style={{ width: "100%" }}
-        >
-          <Select
-            style={{ width: "100%" }}
-            showSearch
-            placeholder="Chọn thành phố"
-            onChange={handleChangeProvince}
-          >
-            {allProvinces &&
-              allProvinces.map((item) => (
-                <Option key={item} value={item}>
-                  {item}
-                </Option>
-              ))}
-          </Select>
-        </Col>
-        <Col
-          xs={{ span: 5 }}
-          md={{ span: 5 }}
-          offset={1}
-          style={{ width: "100%" }}
-        >
-          <Select
-            style={{ width: "100%" }}
-            showSearch
-            placeholder="Chọn người dùng"
-            onChange={handleSelectUser}
-          >
-            {user &&
-              user.map((item) => (
-                <Option key={item.username} value={item.username}>
-                  {item.username}
-                </Option>
-              ))}
-          </Select>
-        </Col>
-        <Col
-          xs={{ span: 5 }}
-          md={{ span: 5 }}
-          offset={1}
-          style={{ width: "100%" }}
-        >
-          <Select
-            style={{ width: "100%" }}
-            showSearch
-            placeholder="Chọn tuyen duong"
-            onChange={handleSelectRoute}
-          >
-            {allRoute &&
-              allRoute.map((item) => (
-                <Option key={item} value={item}>
-                  {item}
-                </Option>
-              ))}
-          </Select>
-        </Col>
-      </Row>
-      <br />
-      <Divider />
-      <Row style={{ width: "100%" }}>
-        <Col xs={{ span: 18 }} md={{ span: 18 }} style={{ width: "100%" }}>
-          {allSign && (
-            <Table
-              style={{ width: "98%", height: "100%" }}
-              className="tableCustomCss"
-              bordered={true}
-              columns={columns}
-              dataSource={allSign}
-            />
-          )}
-        </Col>
-        <Col xs={{ span: 6 }} md={{ span: 6 }} style={{ width: "100%" }}>
-          {image && (
-            <Image
-              src={`data:image/jpeg;base64,${image}`}
-              preview={{
-                src: `data:image/jpeg;base64,${image}`,
-              }}
-            />
-          )}
-        </Col>
-      </Row> */}
     </div>
   );
 }

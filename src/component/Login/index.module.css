@@ -1,0 +1,56 @@
+.backgroundColor {
+    background: #f0f2f5;
+    height: 100%;
+  }
+  
+  .main-column {
+    margin: 10px;
+  }
+  
+  .cardBorder {
+    border: 1px solid #ffffff !important;
+    border-radius: 10px !important;
+    -webkit-box-shadow: 13px 10px 8px -6px rgba(0,0,0,0.73); 
+    box-shadow: -5px 5px 15px rgba(0,0,0,.1);
+  }
+  
+  .divider {
+    height: 100%;
+  }
+  
+  .img {
+    width: 100% !important;
+    height: auto !important;
+  }
+  
+  @media (min-width: 400px) {
+    .backgroundThemes {
+      background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+      background-repeat: no-repeat;
+      background-position: center 110px;
+      background-size: 100%;
+    }
+  }
+  
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f0f2f5;
+    color: #373737;
+    text-align: center;
+    padding-bottom: 3vh;
+  }
+
+.nameApp {
+  font-weight: 600;
+  font-size: 24px;
+  margin-top: 40%;
+  text-align: center;
+}
+
+.description {
+  font-size: 18px;
+  text-align: center;
+}

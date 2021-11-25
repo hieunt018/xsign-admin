@@ -23,3 +23,11 @@ export const getMainSign = (requestParam) => {
 export const getImageDisplay = (requestParam) => {
     return instance.get('/sign/image', { params: requestParam });
 };
+
+export const getAllUserAndRouteByAdmin = (requestParam) => {
+    return instance.get('/all-user-route', { params: requestParam });
+};
+
+export const getAllUserByAdmin = (requestParam) => {
+    return instance.get('/all-user');
+};
