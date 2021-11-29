@@ -1,0 +1,13 @@
+.ant-collapse-content > .ant-collapse-content-box {
+  padding: 0;
+}
+
+.ant-table-tbody > tr > td {
+  height: 5px;
+  padding: 4px;
+}
+
+.ant-table-thead > tr > th {
+  height: 5px;
+  padding: 4px;
+}

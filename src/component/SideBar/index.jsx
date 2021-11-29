@@ -1,75 +1,65 @@
-import { Col, Row, Progress, Input, Form, Tag } from "antd";
-import { MainHeader } from "../Header";
-import { AudioOutlined } from "@ant-design/icons";
+import { Input, Tag, Checkbox, Select } from "antd";
 import { useEffect, useState } from "react";
-import { getAllUserByAdmin } from "../../apis/api";
-import Checkbox from "antd/lib/checkbox/Checkbox";
 import styles from "./index.module.css";
 
-const { Search } = Input;
+const { Option } = Select;
 
-const suffix = (
-  <AudioOutlined
-    style={{
-      fontSize: 16,
-      color: "#1890ff",
-    }}
-  />
-);
 export function SideBar(props) {
-  const [form] = Form.useForm();
+  const [userIds, setUserIds] = useState("all");
+  const [checkedStt, setCheckedStt] = useState(false);
 
-  const onSearch = () => {};
+  function handleSelectUser(checkedValues) {
+    if (checkedValues === "all") {
+      setCheckedStt(true);
+    }
+    setUserIds(checkedValues);
+    console.log("checkedValues", checkedValues);
+    props.setUserSelected(checkedValues);
+  }
+
+  // useEffect(() => {
+  //   handleSelectUser();
+  // }, [])
+
+  // const handleSelectUser = () => {
+
+  // }
 
   return (
     <div className={`${styles.sideBar}`}>
-      <Search
+      {/* <Search
         placeholder="input search text"
-        onSearch={onSearch}
         style={{ width: "90%", marginTop: "5%", marginLeft: "2%" }}
-      />
-      {/* <div>
-          <div>
-            <Progress percent={100} size="small" />
-          </div>
-      </div> */}
-      {/* <Form form={form} name="basic" initialValues={{ remember: true }}>
-        <Form.Item label={"Tất cả"} name="all" valuePropName="checked">
-          <Checkbox />
-        </Form.Item>
+      /> */}
+      {/* <Select
+        className={`${styles.selectionSidebar}`}
+        showSearch
+        placeholder="Chọn người dùng"
+        onChange={handleSelectUser}
+      >
         {props.data &&
-          props.data.length > 0 &&
-          props.data.map((user) => (
-            <Form.Item
-              label={
-                <>
-                  <Tag color={user.color}></Tag>
-                  <p style={{ margin: "0" }}>{user.name}</p>
-                </>
-              }
-              name={user}
-              valuePropName="checked"
-            >
-              <Checkbox style={{ marginRight: "5px" }} />
-            </Form.Item>
+          props.data.map((item) => (
+            <Option key={item.name} value={item.name}>
+              {item.name}
+            </Option>
           ))}
-      </Form> */}
-      <div style={{marginLeft: '8%', marginTop: '5%'}}>
-        <div>
-          <Checkbox>Tất cả</Checkbox>
-        </div>
-        {props.data &&
-          props.data.length > 0 &&
-          props.data.map((user) => (
-            <div>
-              <Checkbox>
-                <>
-                  <Tag style={{width: '40px'}} color={user.color}></Tag>
-                  <p style={{ margin: "0", float: 'right' }}>{user.name}</p>
-                </>
-              </Checkbox>
-            </div>
-          ))}
+      </Select> */}
+      <div style={{ margin: '2% 10% 2% 10%' }}>
+        <Checkbox.Group onChange={handleSelectUser} value={userIds}>
+          <Checkbox value={"all"}>Tất cả</Checkbox>
+          {props.data &&
+            props.data.length > 0 &&
+            props.data.map((user) => (
+              <div>
+                <Checkbox value={user.userId} disabled={checkedStt}>
+                  <>
+                    <Tag style={{ width: "40px" }} color={user.color}></Tag>
+                    <p style={{ margin: "0", float: "right" }}>{user.name}</p>
+                  </>
+                </Checkbox>
+              </div>
+            ))}
+        </Checkbox.Group>
       </div>
     </div>
   );

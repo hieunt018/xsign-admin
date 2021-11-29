@@ -3,13 +3,6 @@ import { getToken } from '../../utils/token';
 import { Route, Navigate } from 'react-router-dom';
 import { NotFound } from '../../component/NotFound';
 
-// interface PrivateRouteProps {
-//   component?: React.FC;
-//   element?: JSX.Element;
-//   path: string;
-//   exact: boolean;
-//   computedMatch?: any;
-// }
 
 export function PrivateRoute(props) {
   const path = window.location.pathname;

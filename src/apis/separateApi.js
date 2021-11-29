@@ -10,7 +10,6 @@ const instance = axios.create({
 instance.interceptors.request.use(
   async config => {
     const new_token = getToken();
-    console.log('new token', new_token)
     if (new_token) setToken(new_token);
     config.headers[AUTHORIZATION_KEY] = `${new_token}`;
 

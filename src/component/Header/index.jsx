@@ -1,9 +1,9 @@
 import { Layout, Row, Col, Image } from "antd";
 import React from "react";
-// import { AccountDropdown } from './AccountDropdown';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import { AccountDropdown } from "./AccountDropdown";
 import Logo from "../../images/logo-xsign.png";
 import styles from "./index.module.css";
+import "./index.css";
 
 const { Header } = Layout;
 
@@ -14,20 +14,26 @@ export function MainHeader(props) {
       style={{ padding: 0 }}
     >
       <Row>
-        <Col md={4}>
-          <Image style={{ width: "45%", margin: '0 auto' }} src={Logo} preview={false}></Image>
+        <Col xs={4} md={4}>
+          <Image
+          id='imageHeader'
+            style={{ height: "100%", margin: "0 auto" }}
+            src={Logo}
+            preview={false}
+          ></Image>
         </Col>
-        <Col md={16}>
+        <Col xs={18} md={18}>
           <p className={`${styles.headerDescription}`}>
-            Quản lý hành trình thu thập biển báo - Tài khoản: QL-KV1
+            Quản lý hành trình thu thập biển báo - Tài khoản: {props.accountAdmin}
           </p>
         </Col>
-        <Col md={4}></Col>
+        <Col xs={2} md={2}>
+          <AccountDropdown className={styles.right} />
+        </Col>
       </Row>
-      <div className={styles.right}>
+      <div >
         {/* <NotificationDropdown /> */}
         {/* <TranslationDropDown /> */}
-        {/* <AccountDropdown /> */}
       </div>
     </Header>
   );

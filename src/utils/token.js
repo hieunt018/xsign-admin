@@ -1,3 +1,5 @@
+import jwtDecode from 'jwt-decode';
+
 const TOKEN_ITEM = "token";
 
 export const setToken = (token) => {
@@ -12,3 +14,6 @@ export const revokeToken = () => {
   localStorage.removeItem(TOKEN_ITEM);
 };
 
+export const getAccountInfoFromToken = () => {
+  return jwtDecode(getToken());
+};

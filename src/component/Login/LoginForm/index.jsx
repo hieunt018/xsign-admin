@@ -1,7 +1,6 @@
 import { Form, Row, Col, Input, Button, Alert } from 'antd';
 import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 import { login } from '../../../apis/auth';
-// import message from '../message';
 import { useState, useEffect } from 'react';
 import { setToken, getToken } from '../../../utils/token';
 import { Navigate } from 'react-router-dom';
@@ -33,13 +32,6 @@ export default function LoginForm() {
         console.log(token)
         setToken(token);
         setLoading(false);
-        // const decode = decodeToken();
-        // const pages = decode.endPointsUi;
-        // const urls = menuUrl.filter((item) => {
-        //   const v = pages.findIndex((v) => item === v.endPoint);
-        //   if (v >= 0) return item;
-        // })[0];
-        // setPage(urls);
         setLogin(true);
       })
       .catch(() => {

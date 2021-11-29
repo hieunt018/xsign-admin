@@ -1,6 +1,4 @@
-import { Col, Row, Card, Image } from "antd";
-import { popup } from "leaflet";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Map, TileLayer, Popup, Polyline } from "react-leaflet";
 import moment from "moment";
 
@@ -29,7 +27,6 @@ export function TripMap(props) {
 
   return (
     <div>
-      {/* <p style={{ fontWeight: "600" }}>Hành trình trên bản đồ</p> */}
       <Map
         style={{ width: "100%" }}
         center={[21.025432, 105.7928293]}
@@ -41,8 +38,6 @@ export function TripMap(props) {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* <Marker position={[9.779349, 105.6189045]}>
-            </Marker> */}
         {trip &&
           trip.length > 0 &&
           trip.map((item) => (
