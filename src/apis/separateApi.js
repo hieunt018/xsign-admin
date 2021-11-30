@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { getToken, setToken, revokeToken } from '../utils/token'
+import { getToken, setToken, revokeToken } from '../utils/token';
+import * as environment from '../environment/index';
 
 const AUTHORIZATION_KEY = 'Authorization';
 
 const instance = axios.create({
-  baseURL: `http://10.61.129.9:8080/x-sign`
+  baseURL: `${environment.API_WEBSERVICE}/x-sign`
 });
 
 instance.interceptors.request.use(

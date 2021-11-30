@@ -1,0 +1,1 @@
+export const API_WEBSERVICE = process.env.REACT_APP_URL_WEBSERVICE

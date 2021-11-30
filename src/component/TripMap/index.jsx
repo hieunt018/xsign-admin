@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Map, TileLayer, Popup, Polyline } from "react-leaflet";
 import moment from "moment";
 
 export function TripMap(props) {
   const trip = props.data;
 
+  const [tripSelected, setTripSelected] = useState();
   const PopupInfoTrip = (props) => {
     const item = props.item;
     return (
       <Popup>
-        <p>Tài khoản: {`${item.username}`}</p>
+        <p>Tài khoản: <b>{`${item.username}`}</b></p>
         <p>Tên đường: {`${item.roadName}`}</p>
         <p>Khoảng cách thu thập: {item.distance} km</p>
         <p>Số biển thu thập: {item.totalSign} </p>
@@ -24,6 +25,11 @@ export function TripMap(props) {
       </Popup>
     );
   };
+
+  const handlerChangeColorOfTrip = (routeId) => {
+    console.log('click')
+    setTripSelected(routeId)
+  }
 
   return (
     <div>
@@ -44,9 +50,10 @@ export function TripMap(props) {
             <Polyline
               positions={item.geoPoints}
               weight={5}
-              color={item.color}
+              color={(tripSelected === item.routeId) ? 'red' : item.color}
               opacity={1}
               fillColor={item.color}
+              onclick={() => handlerChangeColorOfTrip(item.routeId)}
             >
               <PopupInfoTrip item={item} />
             </Polyline>

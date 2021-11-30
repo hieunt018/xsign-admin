@@ -7,7 +7,7 @@ import { MainContent } from "../MainContent";
 import { SideBar } from "../SideBar";
 
 const colors = [
-  "red",
+  "blue",
   "green",
   "yellow",
   "lime",
@@ -19,9 +19,7 @@ const colors = [
   "silver",
   "teal",
   "white",
-  "yellow",
   "black",
-  "blue",
   "fuchsia",
   "gray",
 ];
