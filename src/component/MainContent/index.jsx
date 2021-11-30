@@ -8,6 +8,7 @@ const { Panel } = Collapse;
 
 export function MainContent(props) {
   const [allUseRoute, setAllUserRoute] = useState();
+  const [routeSelected, setRouteSelected] = useState();
 
   useEffect(() => {
     if (props.allUser) {
@@ -15,13 +16,10 @@ export function MainContent(props) {
     }
   }, [props.allUser, props.userSelected]);
 
-  console.log('props.userSelected', props.userSelected)
-
   const getListUserAndRoute = () => {
     let params = !props.userSelected ? '' : {
       listUserId: (props.userSelected.includes('all')) ? '' : props.userSelected.toString()
     }
-    console.log('params', params)
     getAllUserAndRouteByAdmin(params)
       .then((resp) => {
         if (resp && resp.status === 200) {
@@ -54,13 +52,15 @@ export function MainContent(props) {
       .catch(() => console.log("error", "Error"));
   };
 
+  console.log('routeSelected', routeSelected)
+
   return (
     <Collapse defaultActiveKey={["1", "2"]}>
       <Panel header={<b>Danh sách hành trình</b>} key="1" >
-        <TripTable data={allUseRoute}/>
+        <TripTable data={allUseRoute} setRouteSelected={setRouteSelected} userSelected={props.userSelected}/>
       </Panel>
       <Panel header={<b>Hành trình trên bản đồ</b>} key="2">
-        <TripMap data={allUseRoute} />
+        <TripMap data={allUseRoute} routeSelected={routeSelected} userSelected={props.userSelected}/>
       </Panel>
     </Collapse>
   );

@@ -7,7 +7,7 @@ import { MainContent } from "../MainContent";
 import { SideBar } from "../SideBar";
 
 const colors = [
-  "blue",
+  "purple",
   "green",
   "yellow",
   "lime",
@@ -15,7 +15,7 @@ const colors = [
   "navy",
   "olive",
   "orange",
-  "purple",
+  "blue",
   "silver",
   "teal",
   "white",
@@ -54,7 +54,7 @@ export function MainLayout() {
   return (
     <div>
       <MainHeader accountAdmin={accountAdmin} />
-      <div>
+      <div style={{position: 'fixed'}}>
         <Row>
           <Col xs={24} md={4}>
             <SideBar
