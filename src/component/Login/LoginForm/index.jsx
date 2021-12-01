@@ -29,7 +29,6 @@ export default function LoginForm() {
       })
       .then(response => {
         let token= response.data.token;
-        console.log(token)
         setToken(token);
         setLoading(false);
         setLogin(true);

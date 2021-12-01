@@ -1,32 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Map, TileLayer, Popup, Polyline } from "react-leaflet";
 import moment from "moment";
+import { map } from "leaflet";
 
 export function TripMap(props) {
   // const trip = props.data;
   var routeSelected = props.routeSelected;
-
-  console.log("props", props.data, props.routeSelected);
+  const [centerMap, setCenterMap] = useState([21.025432, 105.7928293]);
 
   const [tripSelected, setTripSelected] = useState();
   const [trip, setTrip] = useState([]);
+
+  useEffect(() => {
+    routeSelected = undefined;
+    setTrip(props.data);
+  }, [props.data, props.userSelected]);
 
   useEffect(() => {
     if (routeSelected) {
       let tr = [];
       tr.push(routeSelected);
       setTrip(tr);
+
+      const point = props.routeSelected.geoPoints[0];
+      const center = [point.lat, point.lng];
+      setCenterMap(center);
     } else {
       setTrip(props.data);
     }
-  }, [props.data, props.routeSelected]);
-
-  useEffect(() => {
-    setTrip(props.data);
-    routeSelected = undefined;
-  }, [props.userSelected])
-
-  console.log("trip", trip);
+  }, [props.routeSelected]);
 
   const PopupInfoTrip = (props) => {
     const item = props.item;
@@ -51,18 +53,22 @@ export function TripMap(props) {
   };
 
   const handlerChangeColorOfTrip = (routeId) => {
-    console.log("click");
     setTripSelected(routeId);
   };
 
   return (
     <div>
       <Map
+        // ref={mapView}
         style={{ width: "100%" }}
-        center={[21.025432, 105.7928293]}
+        center={centerMap}
         zoom={13}
         scrollWheelZoom={true}
         minZoom={5}
+        whenReady={(map) =>
+          props.routeSelected &&
+          map.setMapView(props.routeSelected.geoPoints, 15)
+        }
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -71,18 +77,17 @@ export function TripMap(props) {
         {trip &&
           trip.length > 0 &&
           trip.map((item) => (
-              <Polyline
-                positions={item.geoPoints}
-                weight={5}
-                color={tripSelected === item.routeId ? "red" : item.color}
-                opacity={1}
-                fillColor={item.color}
-                onclick={() => handlerChangeColorOfTrip(item.routeId)}
-              >
-                <PopupInfoTrip item={item} />
-              </Polyline>
-            )
-          )}
+            <Polyline
+              positions={item.geoPoints}
+              weight={5}
+              color={tripSelected === item.routeId ? "red" : item.color}
+              opacity={1}
+              fillColor={item.color}
+              onclick={() => handlerChangeColorOfTrip(item.routeId)}
+            >
+              <PopupInfoTrip item={item} />
+            </Polyline>
+          ))}
       </Map>
     </div>
   );

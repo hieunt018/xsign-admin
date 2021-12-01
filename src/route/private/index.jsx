@@ -11,8 +11,6 @@ export function PrivateRoute(props) {
       ? true
       : false;
 
-    console.log("token", getToken())
-
   const condition = getToken() ? true : false;
 
   useEffect(() => {

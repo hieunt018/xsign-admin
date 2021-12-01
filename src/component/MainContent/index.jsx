@@ -52,7 +52,7 @@ export function MainContent(props) {
       .catch(() => console.log("error", "Error"));
   };
 
-  console.log('routeSelected', routeSelected)
+  // console.log('routeSelected', routeSelected)
 
   return (
     <Collapse defaultActiveKey={["1", "2"]}>

@@ -51,8 +51,6 @@ export function TripTable(props) {
     props.setRouteSelected(rowSelected);
   }, [rowSelected]);
 
-  console.log('rowSelected', rowSelected, props.userSelected)
-
   return (
     <div style={{ height: "200px" }}>
       {props.data && (

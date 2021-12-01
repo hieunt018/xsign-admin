@@ -9,7 +9,7 @@ import {
   getRouteInfo,
   getMainSign,
   getImageDisplay,
-  getAllUserAndRouteByAdmin
+  getAllUserAndRouteByAdmin,
 } from "../../apis/api";
 import "../../App.css";
 import style from "./index.module.css";
@@ -60,8 +60,8 @@ export default function FormInput() {
       title: "Total sign",
       key: "totalSign",
       dataIndex: "totalSign",
-    }
-  ]
+    },
+  ];
 
   const columns = [
     {
@@ -154,7 +154,7 @@ export default function FormInput() {
 
   const getListUserAndRoute = () => {
     let param = {
-      adminId: '2c1eeeb4-3c86-4e45-a438-ec4278df099c',
+      adminId: "2c1eeeb4-3c86-4e45-a438-ec4278df099c",
     };
     getAllUserAndRouteByAdmin(param)
       .then((resp) => {
@@ -162,7 +162,7 @@ export default function FormInput() {
           let res = [];
           for (let i = 0; i < resp.data.length; i++) {
             let item = resp.data[i];
-            
+
             for (let i = 0; i < item.routes.length; i++) {
               let r = {
                 username: item.username,
@@ -171,37 +171,28 @@ export default function FormInput() {
                 distance: item.routes[i].distance,
                 totalSign: item.routes[i].totalSign,
                 geoPoints: item.routes[i].geoPoints,
-              }
-              res.push(r)
+              };
+              res.push(r);
             }
           }
           let listCoordinate = [];
-          let listRoute = res.map(route => {
-            console.log(route)
+          let listRoute = res.map((route) => {
             if (route.geoPoints) {
-              let latLngs = route.geoPoints.sort((a, b) => (a.time > b.time) ? 1 : -1);
-            console.log(latLngs)
-          let latLngArr = latLngs.map((item) => {
-              return [item.lat, item.lng];
-          });
-          listCoordinate.push(latLngArr)
+              let latLngs = route.geoPoints.sort((a, b) =>
+                a.time > b.time ? 1 : -1
+              );
+              let latLngArr = latLngs.map((item) => {
+                return [item.lat, item.lng];
+              });
+              listCoordinate.push(latLngArr);
             }
-          })
-          // let latLngs = listRoute.sort((a, b) => (a.time > b.time) ? 1 : -1);
-          // let listPoint = latLngs.map((item) => {
-          //   return [item.lat, item.lng];
-          // });
-
-          console.log('listCoordinate', listCoordinate)
-          setAllLatLngArr(listCoordinate)
-          setAllUserRoute(res)
+          });
+          setAllLatLngArr(listCoordinate);
+          setAllUserRoute(res);
         }
       })
       .catch(() => console.log("error", "Error"));
   };
-
-  console.log(allUseRoute)
-  console.log(allLatLngArr)
   const getListProvinces = () => {
     getAllProvinces()
       .then((res) => {
@@ -245,7 +236,7 @@ export default function FormInput() {
     getRouteInfo(param)
       .then((res) => {
         if (res && res.status === 200) {
-          let data = res.data.sort((a, b) => (a.time > b.time) ? 1 : -1);
+          let data = res.data.sort((a, b) => (a.time > b.time ? 1 : -1));
           console.log(data);
           let listPoint = data.map((item) => {
             return [item.lat, item.lng];
@@ -394,16 +385,17 @@ export default function FormInput() {
             />
             {/* <Marker position={[9.779349, 105.6189045]}>
             </Marker> */}
-            {allLatLngArr && allLatLngArr.length > 0 && allLatLngArr.map(item =>
-            (
-              <Polyline
-                positions={item}
-                weight={5}
-                color="red"
-                opacity={1}
-                fillColor="red"
-              ></Polyline>
-            ))}
+            {allLatLngArr &&
+              allLatLngArr.length > 0 &&
+              allLatLngArr.map((item) => (
+                <Polyline
+                  positions={item}
+                  weight={5}
+                  color="red"
+                  opacity={1}
+                  fillColor="red"
+                ></Polyline>
+              ))}
           </Map>
         </Col>
       </Row>
