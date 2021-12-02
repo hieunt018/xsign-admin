@@ -11,15 +11,18 @@ export function TripTable(props) {
       title: "Tài khoản",
       key: "username",
       dataIndex: "username",
+      width: '15%'
     },
     {
       title: "Tên đường",
       key: "roadName",
       dataIndex: "roadName",
+      width: '30%'
     },
     {
       title: "Thời gian bắt đầu",
       key: "startTime",
+      width: '15%',
       render: (record) => {
         return moment(record.startTime).format("DD/MM/YYYY HH:mm:ss");
       },
@@ -28,6 +31,7 @@ export function TripTable(props) {
     {
       title: "Thời gian kết thúc",
       key: "endTime",
+      width: '15%',
       render: (record) => {
         return moment(record.endTime).format("DD/MM/YYYY HH:mm:ss");
       },
@@ -36,12 +40,14 @@ export function TripTable(props) {
     {
       title: "Khoảng cách thu thập (Km)",
       key: "distance",
+      width: '15%',
       dataIndex: "distance",
       sorter: (a, b) => a.distance - b.distance,
     },
     {
       title: "Số biển thu thập",
       key: "totalSign",
+      width: '10%',
       dataIndex: "totalSign",
       sorter: (a, b) => a.totalSign - b.totalSign,
     },
@@ -64,15 +70,13 @@ export function TripTable(props) {
           }}
           style={{
             width: "100%",
-            overflowX: "scroll",
-            overflowY: "scroll",
             height: "95%",
           }}
           className={style.tableCss}
           bordered={true}
           columns={column}
           dataSource={props.data}
-          //   scroll={{ y: 100}}
+          scroll={{ y: 100 }}
         />
       )}
     </div>

@@ -16,7 +16,8 @@ export function MainHeader(props) {
       <Row>
         <Col xs={4} md={4}>
           <Image
-          id='imageHeader'
+            id='imageHeader'
+            className='image-custome'
             style={{ height: "100%", margin: "0 auto" }}
             src={Logo}
             preview={false}

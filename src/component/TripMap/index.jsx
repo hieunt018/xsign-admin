@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Map, TileLayer, Popup, Polyline } from "react-leaflet";
 import moment from "moment";
-import { map } from "leaflet";
+import "./index.css";
 
 export function TripMap(props) {
-  // const trip = props.data;
   var routeSelected = props.routeSelected;
   const [centerMap, setCenterMap] = useState([21.025432, 105.7928293]);
 
   const [tripSelected, setTripSelected] = useState();
   const [trip, setTrip] = useState([]);
+  const [idMap, setIdMap] = useState();
 
   useEffect(() => {
     routeSelected = undefined;
@@ -17,12 +17,17 @@ export function TripMap(props) {
   }, [props.data, props.userSelected]);
 
   useEffect(() => {
+    let id = (!props.activeKey.includes('1')) ? 'mapContentFull' : 'mapContent';
+    setIdMap(id)
+  }, [props.activeKey])
+
+  useEffect(() => {
     if (routeSelected) {
       let tr = [];
       tr.push(routeSelected);
       setTrip(tr);
-
-      const point = props.routeSelected.geoPoints[0];
+      let p = Math.floor(props.routeSelected.geoPoints.length/2);
+      const point = props.routeSelected.geoPoints[p];
       const center = [point.lat, point.lng];
       setCenterMap(center);
     } else {
@@ -52,14 +57,14 @@ export function TripMap(props) {
     );
   };
 
-  const handlerChangeColorOfTrip = (routeId) => {
-    setTripSelected(routeId);
+  const handlerChangeColorOfTrip = (item) => {
+    setTripSelected(item.routeId);
+    return (<PopupInfoTrip item={item} />)
   };
 
   return (
-    <div>
+    <div id={idMap}>
       <Map
-        // ref={mapView}
         style={{ width: "100%" }}
         center={centerMap}
         zoom={13}
@@ -83,9 +88,9 @@ export function TripMap(props) {
               color={tripSelected === item.routeId ? "red" : item.color}
               opacity={1}
               fillColor={item.color}
-              onclick={() => handlerChangeColorOfTrip(item.routeId)}
+              onclick={() => handlerChangeColorOfTrip(item)}
             >
-              <PopupInfoTrip item={item} />
+              {/* <PopupInfoTrip item={item} /> */}
             </Polyline>
           ))}
       </Map>

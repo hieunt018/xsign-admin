@@ -9,6 +9,7 @@ const { Panel } = Collapse;
 export function MainContent(props) {
   const [allUseRoute, setAllUserRoute] = useState();
   const [routeSelected, setRouteSelected] = useState();
+  const [activeKey, setActiveKey] = useState(['1', '2']);
 
   useEffect(() => {
     if (props.allUser) {
@@ -52,15 +53,17 @@ export function MainContent(props) {
       .catch(() => console.log("error", "Error"));
   };
 
-  // console.log('routeSelected', routeSelected)
+  const handleChangeTab = (key) => {
+    setActiveKey(key)
+  }
 
   return (
-    <Collapse defaultActiveKey={["1", "2"]}>
+    <Collapse defaultActiveKey={["1", "2"]} onChange={handleChangeTab}>
       <Panel header={<b>Danh sách hành trình</b>} key="1" >
-        <TripTable data={allUseRoute} setRouteSelected={setRouteSelected} userSelected={props.userSelected}/>
+        <TripTable data={allUseRoute} setRouteSelected={setRouteSelected} userSelected={props.userSelected} />
       </Panel>
       <Panel header={<b>Hành trình trên bản đồ</b>} key="2">
-        <TripMap data={allUseRoute} routeSelected={routeSelected} userSelected={props.userSelected}/>
+        <TripMap data={allUseRoute} routeSelected={routeSelected} userSelected={props.userSelected} activeKey={activeKey}/>
       </Panel>
     </Collapse>
   );

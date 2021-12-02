@@ -49,6 +49,7 @@ export function SideBar(props) {
         >
           Tất cả
         </Checkbox>
+        <br />
         <Checkbox.Group onChange={handleSelectUser} value={userIds}>
           {props.data &&
             props.data.length > 0 &&

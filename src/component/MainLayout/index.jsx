@@ -54,7 +54,7 @@ export function MainLayout() {
   return (
     <div>
       <MainHeader accountAdmin={accountAdmin} />
-      <div style={{position: 'fixed'}}>
+      <div>
         <Row>
           <Col xs={24} md={4}>
             <SideBar

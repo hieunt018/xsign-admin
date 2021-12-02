@@ -11,7 +11,7 @@ export function Login() {
       <Row>
         <Col xs={24} sm={16} md={16}>
           <Card
-            style={{ width: "60vh", margin: "15% auto" }}
+            style={{ width: "60vh", margin: "16% auto" }}
             headStyle={{
               textAlign: "center",
             }}
@@ -49,7 +49,7 @@ export function Login() {
               Website hỗ trợ quản lý thông tin các tuyến đường đã lấy biển
             </p>
           </div>
-          <div style={{ position: "absolute", bottom: "0", marginLeft: "15%" }}>
+          <div style={{ position: "absolute", bottom: "0", marginLeft: "7vw" }}>
             <Image src={ItemSign} preview={false}></Image>
           </div>
         </Col>

@@ -1,0 +1,14 @@
+#mapContent .leaflet-container {
+    width: 82.5vw!important;
+    height: 60vh!important;
+}
+
+.leaflet-container {
+    width: 82.5vw!important;
+    height: 60vh!important;
+}
+
+#mapContentFull .leaflet-container {
+    width: 82.5vw!important;
+    height: 83vh!important;
+}

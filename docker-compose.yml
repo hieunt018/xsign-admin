@@ -1,0 +1,9 @@
+version: '3.2'
+
+services:
+  x-sign-management-ui:
+    restart: unless-stopped
+    image: x-sign:0.0.1
+    container_name: x-sign-management-ui
+    ports: ['28099:80']
+
