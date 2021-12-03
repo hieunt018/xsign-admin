@@ -57,9 +57,10 @@ export function TripMap(props) {
     );
   };
 
-  const handlerChangeColorOfTrip = (item) => {
+  const handlerChangeColorOfTrip = (e, item) => {
     setTripSelected(item.routeId);
-    return (<PopupInfoTrip item={item} />)
+    e.target.openPopup();
+    // return (<PopupInfoTrip item={item} />)
   };
 
   return (
@@ -88,9 +89,10 @@ export function TripMap(props) {
               color={tripSelected === item.routeId ? "red" : item.color}
               opacity={1}
               fillColor={item.color}
-              onclick={() => handlerChangeColorOfTrip(item)}
+              onclick={(e) => handlerChangeColorOfTrip(e, item)}
+              // onClick={e => e.target.openPopup()}
             >
-              {/* <PopupInfoTrip item={item} /> */}
+              <PopupInfoTrip item={item} />
             </Polyline>
           ))}
       </Map>
