@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/xsign-admin/static/css/main.e086f7cb.chunk.css",
-    "main.js": "/xsign-admin/static/js/main.5c5aceed.chunk.js",
-    "main.js.map": "/xsign-admin/static/js/main.5c5aceed.chunk.js.map",
+    "main.js": "/xsign-admin/static/js/main.3c3b5e25.chunk.js",
+    "main.js.map": "/xsign-admin/static/js/main.3c3b5e25.chunk.js.map",
     "runtime-main.js": "/xsign-admin/static/js/runtime-main.a1f4607d.js",
     "runtime-main.js.map": "/xsign-admin/static/js/runtime-main.a1f4607d.js.map",
     "static/css/2.7224fdad.chunk.css": "/xsign-admin/static/css/2.7224fdad.chunk.css",
@@ -21,6 +21,6 @@
     "static/css/2.7224fdad.chunk.css",
     "static/js/2.5d4861c6.chunk.js",
     "static/css/main.e086f7cb.chunk.css",
-    "static/js/main.5c5aceed.chunk.js"
+    "static/js/main.3c3b5e25.chunk.js"
   ]
 }
