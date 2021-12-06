@@ -23,7 +23,7 @@ export function PrivateRoute(props) {
 
   return condition ? (
     checkAccess ? (
-      <Redirect to={{ pathname: '/' }} />
+      <Route path='/' component={MainLayout} exact={true}></Route>
     ) : (
       <Route path='*' component={NotFound} ></Route>
     )

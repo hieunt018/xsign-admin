@@ -8,7 +8,7 @@ export function AccountDropdown() {
   const history = useHistory();
 
   const _logout = () => {
-    history.push('/x-sign-admin/login');
+    history.push('/login');
     document.title = "Login - XSign Management";
     revokeToken();
   };

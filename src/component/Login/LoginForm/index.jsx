@@ -48,7 +48,7 @@ export default function LoginForm() {
   return (
     <>
       {isLogin ? (
-        <Redirect to={{ pathname: '/x-sign-admin' }} />
+        <Redirect to={{ pathname: '/' }} />
       ) : (
         <Form
           {...layout}
