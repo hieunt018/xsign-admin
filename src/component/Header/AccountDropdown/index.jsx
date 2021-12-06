@@ -1,14 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { Avatar, Dropdown, Menu } from "antd";
 import { UserOutlined, CaretDownOutlined } from "@ant-design/icons";
 import styles from "./index.module.css";
 import { revokeToken } from "../../../utils/token";
 
 export function AccountDropdown() {
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const _logout = () => {
-    navigate("/login");
+    history.push('/x-sign-admin/login');
     document.title = "Login - XSign Management";
     revokeToken();
   };

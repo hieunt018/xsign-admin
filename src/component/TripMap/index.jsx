@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Map, TileLayer, Popup, Polyline } from "react-leaflet";
+import 'leaflet-fullscreen/dist/Leaflet.fullscreen.js'
+import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
 import moment from "moment";
 import "./index.css";
 
@@ -65,7 +67,9 @@ export function TripMap(props) {
 
   return (
     <div id={idMap}>
+      {/* {trip &&  */}
       <Map
+        fullscreenControl={true}
         style={{ width: "100%" }}
         center={centerMap}
         zoom={13}
@@ -86,7 +90,7 @@ export function TripMap(props) {
             <Polyline
               positions={item.geoPoints}
               weight={5}
-              color={tripSelected === item.routeId ? "red" : item.color}
+              color={tripSelected === item.routeId ? "red" : "blue"}
               opacity={1}
               fillColor={item.color}
               onclick={(e) => handlerChangeColorOfTrip(e, item)}
@@ -96,6 +100,7 @@ export function TripMap(props) {
             </Polyline>
           ))}
       </Map>
+{/* } */}
     </div>
   );
 }

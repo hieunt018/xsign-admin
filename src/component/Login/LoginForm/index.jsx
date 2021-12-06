@@ -3,7 +3,7 @@ import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 import { login } from '../../../apis/auth';
 import { useState, useEffect } from 'react';
 import { setToken, getToken } from '../../../utils/token';
-import { Navigate } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import styles from './index.module.css';
 import './index.css';
 
@@ -30,8 +30,8 @@ export default function LoginForm() {
       .then(response => {
         let token= response.data.token;
         setToken(token);
-        setLoading(false);
         setLogin(true);
+        setLoading(false);
       })
       .catch(() => {
         setLoading(false);
@@ -48,7 +48,7 @@ export default function LoginForm() {
   return (
     <>
       {isLogin ? (
-        <Navigate push to={page ? page : '/'} />
+        <Redirect to={{ pathname: '/x-sign-admin' }} />
       ) : (
         <Form
           {...layout}

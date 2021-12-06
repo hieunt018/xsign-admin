@@ -58,8 +58,8 @@ export function TripTable(props) {
   }, [rowSelected]);
 
   return (
-    <div style={{ height: "200px" }}>
-      {props.data && (
+    <div style={{ height: '200px' }}>
+      {/* {props.data && ( */}
         <Table
           onRow={(record, rowIndex) => {
             return {
@@ -69,16 +69,16 @@ export function TripTable(props) {
             };
           }}
           style={{
-            width: "100%",
-            height: "95%",
+            width: "100%"
           }}
           className={style.tableCss}
           bordered={true}
           columns={column}
           dataSource={props.data}
           scroll={{ y: 100 }}
+          loading={props.loading}
         />
-      )}
+      {/* )} */}
     </div>
   );
 }

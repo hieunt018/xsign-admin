@@ -1,11 +1,17 @@
-import { Tag, Checkbox } from "antd";
+import { Tag, Checkbox, Search, Select, Pagination } from "antd";
 import { useEffect, useState } from "react";
 import styles from "./index.module.css";
+
+const { Option } = Select;
 
 export function SideBar(props) {
   const [userIds, setUserIds] = useState();
   const [checkAll, setCheckAll] = useState(true);
   const [indeterminate, setIndeterminate] = useState();
+  const [totalUser, setTotalUser] = useState();
+  const [listUser, setListUser] = useState([]);
+  const [pageSize, setPageSize] = useState(20);
+  const [currentPage, setCurrentPage] = useState(1);
 
   function handleSelectUser(checkedValues) {
     setUserIds(checkedValues);
@@ -25,8 +31,10 @@ export function SideBar(props) {
   };
 
   useEffect(() => {
+    setTotalUser(props.data?.length)
     setUserIds(setAllCheckedBox());
-  }, [props.data]);
+    setListUser(props.data?.slice((currentPage - 1) * pageSize, pageSize * currentPage))
+  }, [props.data, currentPage, pageSize]);
 
   const handleClickAll = (e) => {
     setUserIds(e.target.checked ? setAllCheckedBox() : []);
@@ -39,25 +47,57 @@ export function SideBar(props) {
     }
   };
 
+  const onShowSizeChange = (currentPage, pageSize) => {
+    setCurrentPage(1);
+    setPageSize(pageSize);
+  }
+
+  const onChangePage = (pageSize) => {
+    setCurrentPage(pageSize);
+  }
+
   return (
     <div className={`${styles.sideBar}`}>
-      <div style={{ margin: "2% 10% 2% 10%" }}>
-        <Checkbox
-          indeterminate={indeterminate}
-          onChange={handleClickAll}
-          checked={checkAll}
-        >
-          Tất cả
-        </Checkbox>
+      {/* <Search
+        placeholder="input search text"
+        style={{ width: "90%", marginTop: "5%", marginLeft: "2%" }}
+      /> */}
+      <Select
+        className={`${styles.selectionSidebar}`}
+        showSearch
+        placeholder="Chọn người dùng"
+        onChange={handleSelectUser}
+        filterOption={(input, option) =>
+          option?.children.toLowerCase().includes(input.toLowerCase())
+        }
+      >
+        {props.data &&
+          props.data.map((item) => (
+            <Option key={item.name} value={item.userId}>
+              {item.name}
+            </Option>
+          ))}
+      </Select>
+
+      <div style={{ margin: "0 10% 2% 10%" }}>
+        {listUser &&
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={handleClickAll}
+            checked={checkAll}
+          >
+            Tất cả ({totalUser})
+          </Checkbox>
+        }
         <br />
         <Checkbox.Group onChange={handleSelectUser} value={userIds}>
-          {props.data &&
-            props.data.length > 0 &&
-            props.data.map((user) => (
+          {listUser &&
+            listUser.length > 0 &&
+            listUser.map((user) => (
               <div>
                 <Checkbox value={user.userId}>
                   <>
-                    <Tag style={{ width: "40px" }} color={user.color}></Tag>
+                    {/* <Tag style={{ width: "40px" }} color={user.color}></Tag> */}
                     <p style={{ margin: "0", float: "right" }}>{user.name}</p>
                   </>
                 </Checkbox>
@@ -65,6 +105,18 @@ export function SideBar(props) {
             ))}
         </Checkbox.Group>
       </div>
+      {listUser &&
+        <div style={{ marginLeft: '10px' }}>
+          <Pagination
+            style={{ float: 'right' }}
+            pageSize={pageSize}
+            total={totalUser}
+            current={currentPage}
+            onShowSizeChange={onShowSizeChange}
+            showSizeChanger
+            onChange={onChangePage} />
+        </div>
+      }
     </div>
   );
 }

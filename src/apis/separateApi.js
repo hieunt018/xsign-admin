@@ -5,13 +5,13 @@ import * as environment from '../environment/index';
 const AUTHORIZATION_KEY = 'Authorization';
 
 const instance = axios.create({
-  baseURL: `${environment.API_WEBSERVICE}/x-sign`
+  baseURL: process.env.NODE_ENV === "development" ? `${environment.API_WEBSERVICE}/x-sign-admin-ws` : `/x-sign-admin-ws`
 });
 
 instance.interceptors.request.use(
   async config => {
     const new_token = getToken();
-    if (new_token) setToken(new_token);
+    if (new_token) setToken(new_token); 
     config.headers[AUTHORIZATION_KEY] = `${new_token}`;
 
     return config;
@@ -33,7 +33,7 @@ instance.interceptors.response.use(
   (error) => {
     //Revoke token if authorization fail.
     if (error.response?.status === 401) {
-      window.location.href = '/login';
+      window.location.href = '/x-sign-admin/login';
       revokeToken();
     }
     return Promise.reject(error);

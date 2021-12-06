@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { TripTable } from "../TripTable";
 import { TripMap } from "../TripMap";
 import { getAllUserAndRouteByAdmin } from "../../apis/api";
+import './index.css';
 
 const { Panel } = Collapse;
 
@@ -10,6 +11,7 @@ export function MainContent(props) {
   const [allUseRoute, setAllUserRoute] = useState();
   const [routeSelected, setRouteSelected] = useState();
   const [activeKey, setActiveKey] = useState(['1', '2']);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (props.allUser) {
@@ -18,6 +20,7 @@ export function MainContent(props) {
   }, [props.allUser, props.userSelected]);
 
   const getListUserAndRoute = () => {
+    setLoading(true)
     let params = !props.userSelected ? '' : {
       listUserId: (props.userSelected.includes('all')) ? '' : props.userSelected.toString()
     }
@@ -48,9 +51,13 @@ export function MainContent(props) {
             }
           }
           setAllUserRoute(res);
+          setLoading(false)
         }
       })
-      .catch(() => console.log("error", "Error"));
+      .catch(() => { 
+        console.log("error", "Error")
+        setLoading(false)
+      });
   };
 
   const handleChangeTab = (key) => {
@@ -58,13 +65,17 @@ export function MainContent(props) {
   }
 
   return (
-    <Collapse defaultActiveKey={["1", "2"]} onChange={handleChangeTab}>
-      <Panel header={<b>Danh sách hành trình</b>} key="1" >
-        <TripTable data={allUseRoute} setRouteSelected={setRouteSelected} userSelected={props.userSelected} />
-      </Panel>
-      <Panel header={<b>Hành trình trên bản đồ</b>} key="2">
-        <TripMap data={allUseRoute} routeSelected={routeSelected} userSelected={props.userSelected} activeKey={activeKey}/>
-      </Panel>
-    </Collapse>
+    <>
+      <Collapse defaultActiveKey={["1", "2"]} onChange={handleChangeTab}>
+        <Panel header={<b>Danh sách hành trình</b>} key="1" >
+          <TripTable loading={loading} data={allUseRoute} setRouteSelected={setRouteSelected} userSelected={props.userSelected} activeKey={activeKey} />
+        </Panel>
+      </Collapse>
+      <Collapse collapsible="disabled" defaultActiveKey={['1']}>
+        <Panel id='tabMapTrip' header={<b>Hành trình trên bản đồ</b>} key="1">
+          <TripMap data={allUseRoute} routeSelected={routeSelected} userSelected={props.userSelected} activeKey={activeKey} />
+        </Panel>
+      </Collapse>
+    </>
   );
 }
