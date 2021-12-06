@@ -10,8 +10,7 @@ const App = () => (
   <div>
       <Router>
         <Switch>
-          <Route path='/x-sign-admin/login' component={Login}></Route>
-          <Route path='/x-sign-admin' component={MainLayout} exact={true}></Route>
+          <Route path='/login' component={Login}></Route>
           <PrivateRoute
             path='/'
             exact={false}

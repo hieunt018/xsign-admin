@@ -7,7 +7,7 @@ import { MainLayout } from "../../component/MainLayout"
 export function PrivateRoute(props) {
   const path = window.location.pathname;
 
-  const pages = ['/', '/x-sign-admin', '/x-sign-admin/login']
+  const pages = ['/', '/login']
 
   const checkAccess = pages.findIndex((i) => props.path.includes(i)) >= 0 || props.path === '/'
       ? true
@@ -23,11 +23,11 @@ export function PrivateRoute(props) {
 
   return condition ? (
     checkAccess ? (
-      <Redirect to={{ pathname: '/x-sign-admin' }} />
+      <Redirect to={{ pathname: '/' }} />
     ) : (
       <Route path='*' component={NotFound} ></Route>
     )
   ) : (
-    <Redirect to={{ pathname: '/x-sign-admin/login' }} />
+    <Redirect to={{ pathname: '/login' }} />
   );
 }

@@ -5,7 +5,7 @@ import * as environment from '../environment/index';
 const AUTHORIZATION_KEY = 'Authorization';
 
 const instance = axios.create({
-  baseURL: process.env.NODE_ENV === "development" ? `${environment.API_WEBSERVICE}/x-sign-admin-ws` : `/x-sign-admin-ws`
+  baseURL: process.env.NODE_ENV === "development" ? `${environment.API_WEBSERVICE}/x-sign-admin-ws` : `http://171.244.173.203/x-sign-admin-ws`
 });
 
 instance.interceptors.request.use(
